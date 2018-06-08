@@ -7,7 +7,7 @@ from werkzeug import secure_filename
 import util
 import os
 
-from upload import upload_file, upload_from_db, aact_db_upload
+from upload import upload_file, upload_from_db, aact_db_upload, ohdsi_upload_from_db
 
 app = Flask(__name__)
 
@@ -35,11 +35,11 @@ def upload():
     return "ERROR. Contact Admin and try again later."
 
 
-@app.route('/upload_from_db', methods=['GET'])
+@app.route('/ohdsi_upload_from_db', methods=['GET'])
 def db_to_solr():
     """Migrate data from DB to Solr."""
     if request.method == 'GET':
-        msg = upload_from_db(util.conn_string, util.solr_url)
+        msg = ohdsi_upload_from_db(util.conn_string, util.solr_url)
         return msg
 
     return "Couldn't migrate data."
